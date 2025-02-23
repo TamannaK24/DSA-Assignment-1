@@ -1,44 +1,42 @@
-import java.util.Iterator; 
-
-class Node<T> {
-    T data;
-    Node<T> prev;
-    Node<T> next; 
-
-    public Node(T data) {
-        this.data = data;
-        this.prev = null;
-        this.next = null; 
-    }
-}
+import java.util.Iterator;
 
 public class BrowserLinkedList<T> implements Iterable<T> {
-    private Node<T> head; 
-    private Node<T> tail; 
+    public class Node<T> {
+        T data;
+        Node<T> prev;
+        Node<T> next;
+
+        public Node(T data) {
+            this.data = data;
+            this.prev = null;
+            this.next = null;
+        }
+    }
+
+    private Node<T> head;
+    private Node<T> tail;
     private int size;
 
     public BrowserLinkedList() {
-        this.head = null; 
-        this.tail = null; 
-        size = 0; 
+        this.head = null;
+        this.tail = null;
+        size = 0;
     }
 
-    //adds to the front 
-    public void add(T data) { 
+    public void add(T data) {
         Node<T> newNode = new Node<>(data);
         if (head == null) {
             head = newNode;
-            tail = newNode; 
+            tail = newNode;
         }
         else {
-            newNode.next = head; 
-            head.prev = newNode; 
-            head = newNode; 
+            newNode.next = head;
+            head.prev = newNode;
+            head = newNode;
         }
-        size++; 
+        size++;
     }
 
-    //removes from the front
     public T remove() {
         if (head == null) {
             throw new IllegalArgumentException("List is empty");
@@ -46,15 +44,15 @@ public class BrowserLinkedList<T> implements Iterable<T> {
         T data = head.data;
         if (head == tail) {
             head = null;
-            tail = null; 
+            tail = null;
         }
         else {
             head = head.next;
             if (head != null) {
-                head.prev = null; 
-            } 
+                head.prev = null;
+            }
         }
-        size--; 
+        size--;
         return data;
     }
 
@@ -66,29 +64,29 @@ public class BrowserLinkedList<T> implements Iterable<T> {
     }
 
     public int getSize() {
-        return size; 
+        return size;
     }
 
     public Node<T> getTail() {
         if (tail == null) {
-            return null; 
+            return null;
         }
-        return tail; 
+        return tail;
     }
 
     public boolean isEmpty() {
-        return head == null; 
+        return head == null;
     }
 
-    @Override 
+    @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             private Node<T> current = head;
-            private Node<T> previous = null; 
+            private Node<T> previous = null;
 
             @Override
             public boolean hasNext() {
-                return current != null; 
+                return current != null;
             }
 
             @Override
@@ -96,14 +94,14 @@ public class BrowserLinkedList<T> implements Iterable<T> {
                 if (!hasNext()) {
                     throw new IllegalArgumentException("No more elements in the list");
                 }
-                previous = current; 
+                previous = current;
                 T data = current.data;
-                current = current.next; 
+                current = current.next;
                 if (current != null) {
                     current.prev = previous;
                 }
-                return data; 
+                return data;
             }
-        }; 
+        };
     }
 }

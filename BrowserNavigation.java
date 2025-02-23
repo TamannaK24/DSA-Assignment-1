@@ -1,7 +1,6 @@
-import java.util.Iterator;
 import java.io.*;
 
-public class BrowserNavigation implements Iterable<String> {
+public class BrowserNavigation {
     //stack dedicated for previous pages you've visited everytime you visit a new page
     private BrowserStack<String> backStack;
     //stack dedicate for "next" pages you've visited after going back to a previous page
@@ -38,7 +37,7 @@ public class BrowserNavigation implements Iterable<String> {
         return ("You are currently visiting" + websiteUrl); 
     }
 
-    public String goingForward() {
+    public String goForward() {
         if (forwardStack.isEmpty()) {
             return ("There are no forward pages to visit.");
         }
