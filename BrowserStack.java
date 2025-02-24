@@ -1,5 +1,6 @@
 import java.util.Iterator;
 
+
 public class BrowserStack<T> implements Iterable<T> {
     private BrowserLinkedList<T> stack; 
 
@@ -17,14 +18,14 @@ public class BrowserStack<T> implements Iterable<T> {
 
     public T pop() {
         if (stack.isEmpty()) {
-            throw new IllegalArgumentException("Stack is empty");
+            throw new java.util.EmptyStackException();
         }
         return stack.remove();
     }
 
     public T peek() {
         if (stack.isEmpty()) {
-            throw new IllegalArgumentException("Stack is empty");
+            throw new java.util.EmptyStackException();
         }
         return stack.peek(); 
     }

@@ -1,4 +1,6 @@
 import java.util.Iterator;
+import java.util.EmptyStackException;
+
 
 public class BrowserLinkedList<T> implements Iterable<T> {
     public class Node<T> {
@@ -39,7 +41,7 @@ public class BrowserLinkedList<T> implements Iterable<T> {
 
     public T remove() {
         if (head == null) {
-            throw new IllegalArgumentException("List is empty");
+            throw new java.util.EmptyStackException();
         }
         T data = head.data;
         if (head == tail) {
@@ -58,7 +60,7 @@ public class BrowserLinkedList<T> implements Iterable<T> {
 
     public T peek() {
         if (head == null) {
-            throw new IllegalArgumentException("List is empty");
+            throw new java.util.EmptyStackException(); 
         }
         return head.data;
     }
