@@ -11,6 +11,8 @@ public class BrowserNavigation {
     private String websiteUrl; 
     private static String SESSION_STORAGE_FILE = "session_data.txt"; 
 
+    //ties together the entire navigation system between brwoser pages
+    // initializes a backstack, forwardstack, and histroyqueuee
     public BrowserNavigation() {
         backStack = new BrowserStack<>();
         forwardStack = new BrowserStack<>();
@@ -18,6 +20,8 @@ public class BrowserNavigation {
         websiteUrl = null; 
     }
 
+    //if website url exists, adds to backstack and returns the website that currently is display
+    //adds website to history queue
     public String visitWebsite(String url) {
         if (websiteUrl != null) {
             backStack.push(websiteUrl); 
@@ -28,6 +32,8 @@ public class BrowserNavigation {
         return ("You are currently visiting" + url); 
     }
 
+    //if backstack empty aka no previous pages access, reuturns message
+    //if not empty, remove from forward stack and add it back stack, display the current url
     public String goBack() {
         if (backStack.isEmpty()) {
             return ("There are no previous pages to visit.");
@@ -37,6 +43,8 @@ public class BrowserNavigation {
         return ("You are currently visiting" + websiteUrl); 
     }
 
+    //checks if there are pages in forwardstack to go forward to
+    //if so, removes from backstack, adding to forward stack and dislaying it as current url
     public String goForward() {
         if (forwardStack.isEmpty()) {
             return ("There are no forward pages to visit.");
@@ -46,6 +54,9 @@ public class BrowserNavigation {
         return ("You are currently visiting" + websiteUrl);
     }
 
+    //checks if history is there
+    //if so, loops through history queue and displays each url
+    //uses stringbuilder because memory efficient
     public String showHistory() {
         if (historyQueue.isEmpty()) {
             return ("There is no history to show.");
@@ -57,11 +68,15 @@ public class BrowserNavigation {
         return history.toString();
     }
 
+    //clears history queue
     public String clearHistory() {
         historyQueue.cleanQueue();
         return ("History has been cleared.");
     }
 
+    //try with resources to write to file
+    //writes backstack, forwardstack, historyqueue, and websiteurl to file
+    //if error, returns error message
     public String closeBrowser() {
         try (ObjectOutputStream fileObj = new ObjectOutputStream(new FileOutputStream(SESSION_STORAGE_FILE))) {
             fileObj.writeObject(backStack);      
@@ -74,6 +89,12 @@ public class BrowserNavigation {
         }
     }
 
+    //checks if previous file exists
+    //try with resources to read from file
+    //reads backstack, forwardstack, historyqueue, and websiteurl from file
+    //if current website is present from past session, start there
+    //if not, just restore the session
+    //if error, returns error message
     public String restoreLastSession() {
         File fileObj = new File(SESSION_STORAGE_FILE);
         if (!fileObj.exists()) {
@@ -94,6 +115,7 @@ public class BrowserNavigation {
         }
     }
 
+    //prints the current state of the browser
     public void printState() {
         if (websiteUrl != null) {
             System.out.println("Current Page: " + websiteUrl);

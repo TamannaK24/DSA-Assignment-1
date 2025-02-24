@@ -1,8 +1,10 @@
 import java.util.Iterator;
 import java.util.EmptyStackException;
 
-
+// doubly linked list that allows adding, removal, iteration
 public class BrowserLinkedList<T> implements Iterable<T> {
+    // public internal class for Node of LinkedList where each node stores data
+    // seperated because it refers to the individual node and its characteristics
     public class Node<T> {
         T data;
         Node<T> prev;
@@ -15,22 +17,28 @@ public class BrowserLinkedList<T> implements Iterable<T> {
         }
     }
 
+    // refers in overall context of linked list, not individual node
     private Node<T> head;
     private Node<T> tail;
     private int size;
 
+    // initializing head and tail to null and size to 0
     public BrowserLinkedList() {
         this.head = null;
         this.tail = null;
         size = 0;
     }
 
+    // adds new element to the front of the list
     public void add(T data) {
+        // creates new node of generic type using node class
         Node<T> newNode = new Node<>(data);
+        // checks if list empty
         if (head == null) {
             head = newNode;
             tail = newNode;
         }
+        // if not empty, adds new node to the front of the list
         else {
             newNode.next = head;
             head.prev = newNode;
@@ -39,15 +47,19 @@ public class BrowserLinkedList<T> implements Iterable<T> {
         size++;
     }
 
+    // removes element from the front of the list
     public T remove() {
+        // checks if list empty
         if (head == null) {
             throw new java.util.EmptyStackException();
         }
+        // checks if only one node, if so it removes it
         T data = head.data;
         if (head == tail) {
             head = null;
             tail = null;
         }
+        // if more than one node, removes the first node
         else {
             head = head.next;
             if (head != null) {
@@ -58,6 +70,7 @@ public class BrowserLinkedList<T> implements Iterable<T> {
         return data;
     }
 
+    // returns the first element of the list
     public T peek() {
         if (head == null) {
             throw new java.util.EmptyStackException(); 
@@ -65,21 +78,30 @@ public class BrowserLinkedList<T> implements Iterable<T> {
         return head.data;
     }
 
+    // returns list size
     public int getSize() {
         return size;
     }
 
+    // returns the last node of the list
     public Node<T> getTail() {
+        // checks if empty list
         if (tail == null) {
             return null;
         }
         return tail;
     }
 
+    // checks if list is empty
     public boolean isEmpty() {
         return head == null;
     }
 
+    // iterator for the list, overrides from Iterable interface
+    // returns an iterator object which is an anoymous internal class
+    // hasNext() checks if there is a next element
+    // next() returns the next element
+    // throws exception if no more elements
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
